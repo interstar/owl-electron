@@ -1,4 +1,4 @@
-
+fs = require 'fs'
 
 class @Page
     constructor:(@pageName,@body) ->    
@@ -69,6 +69,32 @@ class @BrowserBasedPageStore
         page.saved = new Date().toString()
         @set(page.pageName,page)
         
+
+
+
+class @NodeBasedPageStore
+    constructor:(@psPath) ->        
+    
+    fName:(pName) -> @psPath + "/" + pName + ".opml"
+        
+    get:(pName,callback) ->        
+        fs.readFile(@fName(pName), (err,data) ->
+                   if (err) 
+                       console.log(err)
+                       callback(new Page(pName,initialOpmltext))
+                   else
+                       console.log(data.toString())
+                       callback(new Page(pName,data.toString()))
+        )
+
+    save:(page,saveErrorHandler) ->
+        fs.writeFile(@fName(page.pageName), page.body, (err) ->
+            if (err)
+                console.log(err)
+                saveErrorHandler(err)
+            else
+                console.log("OK")
+        )
 
 class @ServerBasedPageStore
     constructor:(@getUrl,@postUrl,@postSuccessHandler) ->                            
