@@ -1,28 +1,28 @@
 <html>
 	<head>
-		<title>OWL-FPT</title>
-		<meta name="copyright" content="Copyright 2013-2014, Synaesmedia / Phil Jones (Based on parts by Small Picture Ltd.)">
+		<title>OWL (Outliner with Wiki Linking)</title>
+                <meta name="copyright" content="Copyright 2013-2016, Synaesmedia / Phil Jones (Based on parts by Small Picture Ltd.)">
 
         <!-- Basic Libraries -->
-		<script src="./forked_concord/libraries/jquery-1.9.1.min.js"></script>  
+		<script src="./forked_concord/libraries/jquery-1.9.1.min.js"></script>
 		<link href="./forked_concord/libraries/bootstrap.css" rel="stylesheet">
 		<script src="./forked_concord/libraries/bootstrap.min.js"></script>
-		
+
 		<!-- Concord -->
 		<link rel="stylesheet" href="./forked_concord/concord.css"/>
 		<script src="./forked_concord/concord.js"></script>
 		<script src="./forked_concord/concordUtils.js"></script>
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-		
+
 		<!-- OWL -->
 		<script src="./owllibs/pageStore.js"></script>
 		<script src="./owllibs/navHistory.js"></script>
-		<script src="./owllibs/main.js"></script>			
+		<script src="./owllibs/main.js"></script>
 		<link rel="stylesheet" href="./css/main.css"/>
-		
+
 		<script src="./owllibs/setup.js"></script>
 		<script src="./local_setup.js"></script>
-				
+
     </head>
 
 	<body>
@@ -31,12 +31,22 @@
 				<div class="navbar navbar-fixed-top" data-dropdown="dropdown">
 					<div class="navbar-inner">
 						<div class="container">
-							<a class="brand" href="index.html"><span id="idMenuProductName"></span></a>
 							<ul class="nav" id="idMainMenuList">
+
+                                <li>
+                                <span class="fptNavBar">
+                                    <button class="button fptNavInputs" id="backButton">&lt;</button>
+                                    <button class="button fptNavInputs" id="forwardButton">&gt;</button>
+                                    <input class="fptNavInputs" id="navPageName" />
+                                    <button class="button fptNavInputs" id="goButton">Go!</button>
+                                    <button class="button fptNavInputs" id="makeLinkButton">Link</button>
+                                </span>
+                                </li>
+
 							    <li class="dropdown" id="idQuickMenu">
 							        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick&nbsp;<b class="caret"></b></a>
 							        <ul class="dropdown-menu">
-							            <li>							            
+							            <li>
 							            &nbsp;
 				                        <button class="button" id="upButton">&#8593;</button>
                                         <button class="button" id="downButton">&#8595;</button>
@@ -45,48 +55,48 @@
                                         </li>
 										<li class="divider"></li>
                                         <li><a onclick="opDeleteNode();">Delete Node</a></li>
-							        </ul>       
+							        </ul>
 							    </li>
 
-								<li class="dropdown" id="idOutlinerMenu"> 								
+								<li class="dropdown" id="idOutlinerMenu">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Outliner&nbsp;<b class="caret"></b></a>
 									<ul class="dropdown-menu">
 										<li><a onclick="opExpand ();"><span class="menuKeystroke">Cmd-,</span>Expand</a></li>
 										<li><a onclick="opExpandAllLevels ();">Expand All Subs</a></li>
 										<li><a onclick="opExpandEverything ();">Expand Everything</a></li>
-										
+
 										<li class="divider"></li>
 										<li><a onclick="opCollapse ();"><span class="menuKeystroke">Cmd-.</span>Collapse</a></li>
 										<li><a onclick="opCollapseEverything ();">Collapse Everything</a></li>
-										
+
 										<li class="divider"></li>
 										<li><a onclick="opReorg (up, 1);"><span class="menuKeystroke">Cmd-U</span>Move Up</a></li>
 										<li><a onclick="opReorg (down, 1);"><span class="menuKeystroke">Cmd-D</span>Move Down</a></li>
 										<li><a onclick="opReorg (left, 1);"><span class="menuKeystroke">Cmd-L</span>Move Left</a></li>
 										<li><a onclick="opReorg (right, 1);"><span class="menuKeystroke">Cmd-R</span>Move Right</a></li>
-																				
+
 										<li class="divider"></li>
 										<li><a onclick="opPromote ();"><span class="menuKeystroke">Cmd-[</span>Promote</a></li>
 										<li><a onclick="opDemote ();"><span class="menuKeystroke">Cmd-]</span>Demote</a></li>
-										
+
 										<li class="divider"></li>
 										<li><a onclick="runSelection ();"><span class="menuKeystroke">Cmd-/</span>Run Selection</a></li>
 										<li><a onclick="toggleComment ();"><span class="menuKeystroke">Cmd-\</span>Toggle Comment</a></li>
-										
+
 										<li class="divider"></li>
 										<li><a onclick="toggleRenderMode ();"><span class="menuKeystroke">Cmd-`</span>Toggle Render Mode</a></li>
 										</ul>
 									</li>
-                                    
-                                <li class="dropdown" id="idOwlMenu"> 
+
+                                <li class="dropdown" id="idOwlMenu">
 								    <a href="#" class="dropdown-toggle" data-toggle="dropdown">OWL&nbsp;<b class="caret"></b></a>
 								    <ul class="dropdown-menu">
 									    <li><a href="https://github.com/interstar/OWL">About OWL (README on GitHub)</a></li>
 									    <li><a href="https://github.com/scripting/concord">Original Concord Project</a></li>
 									    <li><a href="http://docs.fargo.io/outlinerHowto/">The SmallPicture Outliner Howto</a></li>
-									    
+
 									    <li><a href="http://project.thoughtstorms.info">Project ThoughtStorms</a></li>
-									    
+
 							        </ul>
 							        </li>
 
@@ -101,24 +111,16 @@
 					</div>
 				</div>
 			</div>
-	        
+
 		<div class="divOutlinerContainer">
 
-            <div class="fptNavBar">
-                <button class="button" id="backButton">&lt;</button>
-                <button class="button" id="forwardButton">&gt;</button>
-                <input  id="navPageName" />
-                <button class="button" id="goButton">Go!</button>
-                <button class="button" id="makeLinkButton">Link</button>
-   
-            </div>
 
             <div>&nbsp;</div>
-      
+
     		<div id="outliner"></div>
         </div>
 
-		<script>		
+		<script>
 			$(document).ready (function () {
 			    setupEvents();
 			    localConfigs();
