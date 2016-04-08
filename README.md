@@ -1,7 +1,7 @@
 OWL : Outliner with Wiki Linking (Electron Edition)
 ===================================================
 
-Wrapping OWL as a desktop app. using Electron.
+Wrapping OWL as a desktop app. using [Electron](http://electron.atom.io/).
 
 What?
 -----
